@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>💕 A Little Question...</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+<div class="bg-canvas" id="bgCanvas"></div>
+
+<div class="screen active" id="screen-welcome">
+  <div class="card slide-in" style="max-width:400px">
+    <div class="lily-corner lily-tl">🌸</div>
+    <div class="lily-corner lily-tr">🌸</div>
+    <div class="lily-corner lily-bl">🌿</div>
+    <div class="lily-corner lily-br">🌿</div>
+    <span class="emoji-big">💌</span>
+    <h1 class="screen-title italic">Hey, you&hellip;</h1>
+    <p class="screen-sub">I have a teeny tiny question for you.<br>But first, a few things I need to know ☺️</p>
+    <button class="btn btn-primary" onclick="goTo('screen-q1')">Okay, what is it? 🌸</button>
+
+    <button class="lock-btn" onclick="goTo('screen-lock')" title="psst... secret">🔒</button>
+  </div>
+</div>
+
+<div class="screen" id="screen-lock">
+  <div class="card slide-in" style="max-width:360px">
+    <div class="lily-corner lily-tl">🌸</div>
+    <div class="lily-corner lily-tr">🌸</div>
+    <span class="emoji-big" style="font-size:2.8rem">🔐</span>
+    <h2 class="screen-title" style="font-size:1.6rem">Secret Surprise</h2>
+    <p class="screen-sub" style="margin-bottom:.5rem">Enter the password to unlock 💕</p>
+
+    <div class="pw-dots" id="pwDots">
+      <div class="pw-dot" id="pd0"></div>
+      <div class="pw-dot" id="pd1"></div>
+      <div class="pw-dot" id="pd2"></div>
+      <div class="pw-dot" id="pd3"></div>
+      <div class="pw-dot" id="pd4"></div>
+      <div class="pw-dot" id="pd5"></div>
+    </div>
+    <div class="pw-error" id="pwError"></div>
+
+    <div class="pw-numpad">
+      <button class="pw-key" onclick="pwPress('1')">1</button>
+      <button class="pw-key" onclick="pwPress('2')">2</button>
+      <button class="pw-key" onclick="pwPress('3')">3</button>
+      <button class="pw-key" onclick="pwPress('4')">4</button>
+      <button class="pw-key" onclick="pwPress('5')">5</button>
+      <button class="pw-key" onclick="pwPress('6')">6</button>
+      <button class="pw-key" onclick="pwPress('7')">7</button>
+      <button class="pw-key" onclick="pwPress('8')">8</button>
+      <button class="pw-key" onclick="pwPress('9')">9</button>
+      <button class="pw-key del" onclick="pwBack()">⌫</button>
+      <button class="pw-key" onclick="pwPress('0')">0</button>
+      <button class="pw-key del" onclick="pwClear()">✕</button>
+    </div>
+    <button class="btn btn-secondary" onclick="goTo('screen-welcome')" style="margin-top:.5rem;font-size:.85rem;padding:.5rem 1.2rem">← Back</button>
+  </div>
+</div>
+
+<div class="screen" id="screen-surprise-intro">
+  <div class="card slide-in" style="max-width:420px">
+    <div class="lily-corner lily-tl">🌸</div>
+    <div class="lily-corner lily-tr">🌸</div>
+    <span class="emoji-big" style="font-size:2.5rem">🌷</span>
+    <h2 class="screen-title italic" style="font-size:1.6rem">You found it!</h2>
+    <p class="screen-sub" style="margin-bottom:1rem">very short words from someone<br>in front of you will start...</p>
+    <button class="btn btn-primary" onclick="goTo('screen-court-q')">tapos na po sya mag yap 😌</button>
+  </div>
+</div>
+
+<div class="screen" id="screen-court-q">
+  <div class="card slide-in" style="max-width:430px">
+    <div class="lily-corner lily-tl">🌸</div>
+    <div class="lily-corner lily-tr">🌸</div>
+    <div class="lily-corner lily-bl">🌿</div>
+    <div class="lily-corner lily-br">🌿</div>
+
+    <span class="heart-pulse">💗</span>
+    <h2 class="screen-title" style="font-size:1.35rem; margin-bottom:.4rem; margin-top:.3rem;">may i court you until i can<br>truly call you mine :))</h2>
+    <p class="screen-sub" style="font-size:.82rem; margin-bottom:.4rem;">take your time, i'll wait 🥺</p>
+
+    <div class="court-yn-container" id="courtYNContainer">
+      <button class="court-btn-no" id="courtBtnNo" onclick="courtRunAway()">no 🙈</button>
+      <button class="court-btn-yes" onclick="showYayyy()">yes bebe 💕</button>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="screen-q1">
+  <div class="card">
+    <div class="lily-corner lily-tl">🌷</div>
+    <div class="lily-corner lily-tr">🌷</div>
+    <div class="progress"><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+    <span class="emoji-big">🍽️</span>
+    <h2 class="screen-title">Where do you wanna eat?</h2>
+    <p class="screen-sub" style="margin-bottom:1rem">Pick your favorite vibe ✨</p>
+    <div class="options-grid">
+      <button class="option-btn" onclick="pick(this,'eat','Sushi Date 🍣')"><span class="opt-emoji">🍣</span> Sushi</button>
+      <button class="option-btn" onclick="pick(this,'eat','Ramen Night 🍜')"><span class="opt-emoji">🍜</span> Ramen</button>
+      <button class="option-btn" onclick="pick(this,'eat','Pasta & Wine 🍝')"><span class="opt-emoji">🍝</span> Pasta</button>
+      <button class="option-btn" onclick="pick(this,'eat','Surprise me! 🎁')"><span class="opt-emoji">🎲</span> Surprise!</button>
+    </div>
+    <div class="custom-area">
+      <button class="custom-toggle" onclick="toggleCustom('custom-eat')">✏️ Something else? Type it!</button>
+      <div class="custom-input-wrap" id="custom-eat">
+        <input class="custom-input" type="text" placeholder="e.g. Korean BBQ 🥩" id="input-eat" onkeydown="if(event.key==='Enter')confirmCustom('eat','input-eat','btn-q1')">
+        <button class="custom-confirm" onclick="confirmCustom('eat','input-eat','btn-q1')">OK 💕</button>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="btn-q1" onclick="goTo('screen-q2')" style="opacity:.5;pointer-events:none">Next →</button>
+  </div>
+</div>
+
+<div class="screen" id="screen-q2">
+  <div class="card">
+    <div class="lily-corner lily-tl">🌺</div>
+    <div class="lily-corner lily-tr">🌺</div>
+    <div class="progress"><div class="dot done"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+    <span class="emoji-big">🎡</span>
+    <h2 class="screen-title">What should we do?</h2>
+    <p class="screen-sub" style="margin-bottom:1rem">After we eat, of course 🥰</p>
+    <div class="options-grid">
+      <button class="option-btn" onclick="pick(this,'do','A walk in the park 🌳')"><span class="opt-emoji">🌳</span> Park walk</button>
+      <button class="option-btn" onclick="pick(this,'do','Café hopping ☕')"><span class="opt-emoji">☕</span> Café hop</button>
+      <button class="option-btn" onclick="pick(this,'do','Museum visit 🖼️')"><span class="opt-emoji">🖼️</span> Museum</button>
+      <button class="option-btn" onclick="pick(this,'do','Shopping! 🛍️')"><span class="opt-emoji">🛍️</span> Shopping</button>
+    </div>
+    <div class="custom-area">
+      <button class="custom-toggle" onclick="toggleCustom('custom-do')">✏️ Something else? Type it!</button>
+      <div class="custom-input-wrap" id="custom-do">
+        <input class="custom-input" type="text" placeholder="e.g. Arcade games 🕹️" id="input-do" onkeydown="if(event.key==='Enter')confirmCustom('do','input-do','btn-q2')">
+        <button class="custom-confirm" onclick="confirmCustom('do','input-do','btn-q2')">OK 💕</button>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="btn-q2" onclick="goTo('screen-q3')" style="opacity:.5;pointer-events:none">Next →</button>
+  </div>
+</div>
+
+<div class="screen" id="screen-q3">
+  <div class="card">
+    <div class="lily-corner lily-tl">🌸</div>
+    <div class="lily-corner lily-tr">🌸</div>
+    <div class="progress"><div class="dot done"></div><div class="dot done"></div><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
+    <span class="emoji-big">🍵</span>
+    <h2 class="screen-title">Matcha, yes or yes?</h2>
+    <p class="screen-sub" style="margin-bottom:1rem">This one's very important 😌</p>
+    <div class="options-grid">
+      <button class="option-btn" onclick="pick(this,'matcha','Matcha latte please! 🍵')"><span class="opt-emoji">🍵</span> YES matcha</button>
+      <button class="option-btn" onclick="pick(this,'matcha','Iced matcha only 🧊')"><span class="opt-emoji">🧊</span> Iced only</button>
+      <button class="option-btn" onclick="pick(this,'matcha','Boba instead 🧋')"><span class="opt-emoji">🧋</span> Boba</button>
+      <button class="option-btn" onclick="pick(this,'matcha','Coffee for me ☕')"><span class="opt-emoji">☕</span> Coffee</button>
+    </div>
+    <div class="custom-area">
+      <button class="custom-toggle" onclick="toggleCustom('custom-matcha')">✏️ Something else? Type it!</button>
+      <div class="custom-input-wrap" id="custom-matcha">
+        <input class="custom-input" type="text" placeholder="e.g. Taro latte 💜" id="input-matcha" onkeydown="if(event.key==='Enter')confirmCustom('matcha','input-matcha','btn-q3')">
+        <button class="custom-confirm" onclick="confirmCustom('matcha','input-matcha','btn-q3')">OK 💕</button>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="btn-q3" onclick="goTo('screen-q4')" style="opacity:.5;pointer-events:none">Next →</button>
+  </div>
+</div>
+
+<div class="screen" id="screen-q4">
+  <div class="card">
+    <div class="lily-corner lily-tl">🌷</div>
+    <div class="lily-corner lily-tr">🌷</div>
+    <div class="progress"><div class="dot done"></div><div class="dot done"></div><div class="dot done"></div><div class="dot active"></div><div class="dot"></div></div>
+    <span class="emoji-big">🎬</span>
+    <h2 class="screen-title">Movie time?</h2>
+    <p class="screen-sub" style="margin-bottom:1rem">What are we watching? 🍿</p>
+    <div class="options-grid">
+      <button class="option-btn" onclick="pick(this,'movie','Rom-com it is 💕')"><span class="opt-emoji">💕</span> Rom-com</button>
+      <button class="option-btn" onclick="pick(this,'movie','Action & popcorn 🍿')"><span class="opt-emoji">🍿</span> Action</button>
+      <button class="option-btn" onclick="pick(this,'movie','Animated feels 🏰')"><span class="opt-emoji">🏰</span> Animated</button>
+      <button class="option-btn" onclick="pick(this,'movie','No movie, just us 🌙')"><span class="opt-emoji">🌙</span> No movie</button>
+    </div>
+    <div class="custom-area">
+      <button class="custom-toggle" onclick="toggleCustom('custom-movie')">✏️ Have a specific movie? Type it!</button>
+      <div class="custom-input-wrap" id="custom-movie">
+        <input class="custom-input" type="text" placeholder="e.g. Howl's Moving Castle 🏯" id="input-movie" onkeydown="if(event.key==='Enter')confirmCustom('movie','input-movie','btn-q4')">
+        <button class="custom-confirm" onclick="confirmCustom('movie','input-movie','btn-q4')">OK 💕</button>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="btn-q4" onclick="goTo('screen-q5')" style="opacity:.5;pointer-events:none">Next →</button>
+  </div>
+</div>
+
+<div class="screen" id="screen-q5">
+  <div class="card">
+    <div class="lily-corner lily-tl">🌸</div>
+    <div class="lily-corner lily-tr">🌸</div>
+    <div class="progress"><div class="dot done"></div><div class="dot done"></div><div class="dot done"></div><div class="dot done"></div><div class="dot active"></div></div>
+    <span class="emoji-big">📸</span>
+    <h2 class="screen-title">Photobooth?</h2>
+    <p class="screen-sub" style="margin-bottom:1rem">We need memories!! 🥹</p>
+    <div class="options-grid">
+      <button class="option-btn" onclick="pick(this,'photo','Photobooth yes!! 📸')"><span class="opt-emoji">📸</span> Definitely!</button>
+      <button class="option-btn" onclick="pick(this,'photo','Polaroid instead 🎞️')"><span class="opt-emoji">🎞️</span> Polaroid</button>
+      <button class="option-btn" onclick="pick(this,'photo','Phone pics are fine 📱')"><span class="opt-emoji">📱</span> Phone pics</button>
+      <button class="option-btn" onclick="pick(this,'photo','All of the above!!! 🤩')"><span class="opt-emoji">🤩</span> All of it!</button>
+    </div>
+    <div class="custom-area">
+      <button class="custom-toggle" onclick="toggleCustom('custom-photo')">✏️ Something else? Type it!</button>
+      <div class="custom-input-wrap" id="custom-photo">
+        <input class="custom-input" type="text" placeholder="e.g. Disposable camera 📷" id="input-photo" onkeydown="if(event.key==='Enter')confirmCustom('photo','input-photo','btn-q5')">
+        <button class="custom-confirm" onclick="confirmCustom('photo','input-photo','btn-q5')">OK 💕</button>
+      </div>
+    </div>
+    <button class="btn btn-primary" id="btn-q5" onclick="goTo('screen-main')" style="opacity:.5;pointer-events:none">Almost there 💌</button>
+  </div>
+</div>
+
+<div class="screen" id="screen-main">
+  <div class="card" style="max-width:420px">
+    <div class="lily-corner lily-tl">🌸</div>
+    <div class="lily-corner lily-tr">🌸</div>
+    <div class="lily-corner lily-bl">🌿</div>
+    <div class="lily-corner lily-br">🌿</div>
+    <span class="heart-pulse">💗</span>
+    <h1 class="screen-title italic" style="font-size:1.7rem;margin-bottom:.4rem;">Sooo...</h1>
+    <h2 class="screen-title" style="font-size:1.5rem;margin-bottom:.6rem;">Will you go on a date<br>with me? 🥺</h2>
+    <p class="screen-sub" style="font-size:.85rem;margin-bottom:.5rem;">I already have the perfect plan in mind~</p>
+    <div class="yes-no-container" id="yesNoContainer">
+      <button class="btn-no" id="btnNo" onclick="runAway()">No 🙅</button>
+      <button class="btn-yes" onclick="goTo('screen-yes')">Yes!! 💕</button>
+    </div>
+  </div>
+</div>
+
+<div class="screen" id="screen-yes">
+  <div class="card" id="datePlanCard" style="max-width:500px;overflow-y:auto;max-height:92vh;">
+    <div class="lily-corner lily-tl">🌸</div>
+    <div class="lily-corner lily-tr">🌸</div>
+    <span class="emoji-big" style="animation-duration:1s">🎉</span>
+    <h1 class="screen-title italic" style="margin-bottom:.3rem;">Yay!!! I'm so excited!</h1>
+    <p class="screen-sub">Here's what our perfect date looks like~</p>
+    <div class="picks-summary" id="picksDisplay"></div>
+    <div class="date-details" id="dateDetails">
+      <div class="detail-item" id="di1"><span class="detail-emoji">📍</span><div class="detail-text"><strong>Meeting Point</strong><br>I'll pick you up! Or we can meet wherever you're comfy 🥰</div></div>
+      <div class="detail-item" id="di2"><span class="detail-emoji" id="di2-emoji">🍽️</span><div class="detail-text"><strong>Dinner</strong><br><span id="di2-text">We'll figure it out together!</span></div></div>
+      <div class="detail-item" id="di3"><span class="detail-emoji" id="di3-emoji">🎡</span><div class="detail-text"><strong>Activity</strong><br><span id="di3-text">Whatever you feel like!</span></div></div>
+      <div class="detail-item" id="di4"><span class="detail-emoji" id="di4-emoji">🍵</span><div class="detail-text"><strong>Drinks</strong><br><span id="di4-text">Your fave!</span></div></div>
+      <div class="detail-item" id="di5"><span class="detail-emoji" id="di5-emoji">🎬</span><div class="detail-text"><strong>Movie</strong><br><span id="di5-text">Whatever you pick!</span></div></div>
+      <div class="detail-item" id="di6"><span class="detail-emoji" id="di6-emoji">📸</span><div class="detail-text"><strong>Memories</strong><br><span id="di6-text">We'll capture everything!</span></div></div>
+      <div class="detail-item" id="di7"><span class="detail-emoji">💕</span><div class="detail-text"><strong>With</strong><br>Just you and me 🌸</div></div>
+    </div>
+    <div style="margin-top:1.2rem;text-align:center;">
+      <p style="font-family:'Playfair Display',serif;font-style:italic;color:var(--pink-deep);font-size:1.05rem;">I can't wait to spend the day with you 🌷</p>
+      <button class="btn-download" id="btnDownload" onclick="downloadCard()">📥 Save our date plan!</button>
+    </div>
+  </div>
+</div>
+
+<div class="popup-overlay" id="yayPopup">
+  <div class="popup-card">
+    <div style="font-size:3rem;margin-bottom:.5rem;animation:bounce 1s ease-in-out infinite">🎊</div>
+    <h2>YAYYY!!!</h2>
+    <p style="margin-top:.5rem;margin-bottom:1.2rem;">now mag lower right kayo 🥹💕</p>
+    <div style="font-size:2rem;margin-bottom:1rem">🌸💗🌸</div>
+    <button class="btn btn-primary" onclick="closePopup()" style="font-size:.9rem;padding:.6rem 1.5rem">yay!! 💕</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
